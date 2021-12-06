@@ -119,7 +119,10 @@ public class CartPageTests {
 
             categoryMenu = waitUntilElementIsVisible(driver, By.cssSelector(categoriesMenuCSS));
             WebElement phonesCategoryLink = categoryMenu.findElement(By.cssSelector(phonesCategoryLinkCSS));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(false)", phonesCategoryLink);
+            ((JavascriptExecutor) driver).executeScript(
+                    "window.scroll(" + (-phonesCategoryLink.getLocation().x - 100) + ","
+                            + (-phonesCategoryLink.getLocation().y - 100) + ");"
+            );
             phonesCategoryLink.click();
 
             waitUntilElementIsVisible(driver, By.xpath(xiaomiPhonesBrandXpath)).click();
@@ -177,12 +180,6 @@ public class CartPageTests {
     WebElement waitUntilElementIsVisible(WebDriver driver, By locator){
         return new WebDriverWait(driver, DEFAULT_TIMEOUT).until(
                 ExpectedConditions.presenceOfElementLocated(locator)
-        );
-    }
-
-     WebElement waitUntilElementIsRefreshed(WebDriver driver, By locator){
-        return new WebDriverWait(driver, DEFAULT_TIMEOUT).until(
-                ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(locator))
         );
     }
 
